@@ -1,7 +1,7 @@
 FROM resin/rpi-raspbian:jessie
 
 RUN	apt-get update \
-	&& apt-get install libfontconfig
+	&& apt-get install libfontconfig ca-certificates
 
 ARG	VERSION=3.1.1
 ARG	VERSION_SUFFIX=1471857718
@@ -17,6 +17,7 @@ ARG	PORT=3000
 EXPOSE	$PORT
 
 VOLUME  ["/data", "/etc/grafana"]
+RUN     /grafana/bin/grafana-cli plugins install grafana-piechart-panel
 CMD     /grafana/bin/grafana-server --homepath=/grafana --config=/etc/grafana/grafana.ini
 
 
